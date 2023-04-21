@@ -1,0 +1,18 @@
+
+<launch>
+    <!-- Set the Gazebo ROS package to load -->
+    <arg name="urdf_file" default="$(find mybot)/urdf/mybot.urdf"/>
+    <arg name="world_name" default="$(find mybot)/worlds/myworld.world"/>
+
+    <!-- Launch Gazebo with the specified world file -->
+    <node name="gazebo" pkg="gazebo_ros" type="gazebo" args="--verbose $(arg world_name)"/>
+
+    <!-- Load the URDF model into Gazebo -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)'"/>
+
+    <!-- Launch the URDF model spawner -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model mybot"/>
+</launch>
+
+
+
